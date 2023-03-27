@@ -1,0 +1,188 @@
+-- MySQL dump 10.13  Distrib 8.0.32, for Linux (aarch64)
+--
+-- Host: localhost    Database: Schule
+-- ------------------------------------------------------
+-- Server version	8.0.32
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Klasse`
+--
+
+DROP TABLE IF EXISTS `Klasse`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Klasse` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Klasse`
+--
+
+LOCK TABLES `Klasse` WRITE;
+/*!40000 ALTER TABLE `Klasse` DISABLE KEYS */;
+INSERT INTO `Klasse` VALUES (1,'8a'),(2,'8b'),(3,'9a'),(4,'9b');
+/*!40000 ALTER TABLE `Klasse` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Klasse_Schulfach`
+--
+
+DROP TABLE IF EXISTS `Klasse_Schulfach`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Klasse_Schulfach` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Klasse_ID` int NOT NULL,
+  `Schulfach_ID` int NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Klasse_ID` (`Klasse_ID`),
+  KEY `Schulfach_ID` (`Schulfach_ID`),
+  CONSTRAINT `Klasse_Schulfach_ibfk_1` FOREIGN KEY (`Klasse_ID`) REFERENCES `Klasse` (`ID`),
+  CONSTRAINT `Klasse_Schulfach_ibfk_2` FOREIGN KEY (`Schulfach_ID`) REFERENCES `Schulfach` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Klasse_Schulfach`
+--
+
+LOCK TABLES `Klasse_Schulfach` WRITE;
+/*!40000 ALTER TABLE `Klasse_Schulfach` DISABLE KEYS */;
+INSERT INTO `Klasse_Schulfach` VALUES (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6),(7,1,7),(8,2,1),(9,2,2),(10,2,3),(11,2,4),(12,2,5),(13,3,1),(14,3,2),(15,3,3),(16,3,4),(17,3,5),(18,3,6),(19,4,1),(20,4,2),(21,4,3),(22,4,4);
+/*!40000 ALTER TABLE `Klasse_Schulfach` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Lehrer`
+--
+
+DROP TABLE IF EXISTS `Lehrer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Lehrer` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Lehrer`
+--
+
+LOCK TABLES `Lehrer` WRITE;
+/*!40000 ALTER TABLE `Lehrer` DISABLE KEYS */;
+INSERT INTO `Lehrer` VALUES (1,'Herr Schmidt'),(2,'Frau Müller'),(3,'Herr Wagner'),(4,'Frau Becker');
+/*!40000 ALTER TABLE `Lehrer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Raum`
+--
+
+DROP TABLE IF EXISTS `Raum`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Raum` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Raumnummer` varchar(10) NOT NULL,
+  `Anzahl_Plaetze` int NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Raum`
+--
+
+LOCK TABLES `Raum` WRITE;
+/*!40000 ALTER TABLE `Raum` DISABLE KEYS */;
+INSERT INTO `Raum` VALUES (1,'A101',15),(2,'A102',20),(3,'A201',19),(4,'A202',18),(5,'B101',30),(6,'B102',22),(7,'B103',20);
+/*!40000 ALTER TABLE `Raum` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Schueler`
+--
+
+DROP TABLE IF EXISTS `Schueler`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Schueler` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) NOT NULL,
+  `Geschlecht` enum('M','W') NOT NULL,
+  `Geburtsdatum` date NOT NULL,
+  `Klasse_ID` int NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Klasse_ID` (`Klasse_ID`),
+  CONSTRAINT `Schueler_ibfk_1` FOREIGN KEY (`Klasse_ID`) REFERENCES `Klasse` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Schueler`
+--
+
+LOCK TABLES `Schueler` WRITE;
+/*!40000 ALTER TABLE `Schueler` DISABLE KEYS */;
+INSERT INTO `Schueler` VALUES (1,'Max Mustermann','M','2009-02-11',1),(2,'Lena Müller','W','2009-03-20',1),(3,'Tim Schmidt','M','2009-05-15',1),(4,'Laura Schulz','W','2009-06-28',1),(5,'Finn Wagner','M','2009-07-03',1),(6,'Sophie Becker','W','2009-08-08',1),(7,'Paul Hoffmann','M','2009-09-10',1),(8,'Hannah Schäfer','W','2009-10-22',1),(9,'Janine Bauer','W','2008-11-07',2),(10,'Tom Schneider','M','2008-12-19',2),(11,'Anna Keller','W','2009-01-25',2),(12,'David Krüger','M','2009-04-07',2),(13,'Emilia Weber','W','2009-05-29',2),(14,'Benjamin Fischer','M','2009-07-16',2),(15,'Marie Werner','W','2009-08-30',2),(16,'Felix Huber','M','2009-09-24',2),(17,'Luisa Schmitt','W','2009-11-06',2),(18,'Markus Becker','M','2008-12-13',3),(19,'Sophia Mayer','W','2009-01-28',3),(20,'Leonie Schmitz','W','2009-03-14',3),(21,'Niklas Hartmann','M','2009-04-22',3),(22,'Mara Koch','W','2009-06-05',3),(23,'Jonathan Schreiber','M','2009-07-18',3),(24,'Melanie Schmid','W','2009-09-01',3),(25,'Simon Bauer','M','2009-10-14',3),(26,'Lea König','W','2008-11-23',4),(27,'Luca Meyer','M','2009-01-07',4),(28,'Lisa Hofmann','W','2009-02-20',4),(29,'Finnja Schuster','W','2009-04-03',4),(30,'Leonhard Vogel','M','2009-05-18',4);
+/*!40000 ALTER TABLE `Schueler` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Schulfach`
+--
+
+DROP TABLE IF EXISTS `Schulfach`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Schulfach` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) NOT NULL,
+  `Lehrer_ID` int NOT NULL,
+  `Raum_ID` int NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Lehrer_ID` (`Lehrer_ID`),
+  KEY `Raum_ID` (`Raum_ID`),
+  CONSTRAINT `Schulfach_ibfk_1` FOREIGN KEY (`Lehrer_ID`) REFERENCES `Lehrer` (`ID`),
+  CONSTRAINT `Schulfach_ibfk_2` FOREIGN KEY (`Raum_ID`) REFERENCES `Raum` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Schulfach`
+--
+
+LOCK TABLES `Schulfach` WRITE;
+/*!40000 ALTER TABLE `Schulfach` DISABLE KEYS */;
+INSERT INTO `Schulfach` VALUES (1,'Mathematik',1,2),(2,'Deutsch',2,2),(3,'Englisch',3,4),(4,'Geschichte',4,4),(5,'Biologie',1,6),(6,'Physik',1,6),(7,'Sport',3,1);
+/*!40000 ALTER TABLE `Schulfach` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-03-27 21:16:24
